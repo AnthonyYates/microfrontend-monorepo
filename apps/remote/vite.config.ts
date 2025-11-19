@@ -12,7 +12,7 @@ export default defineConfig({
                 './App': './src/App',
                 './Button': './src/components/Button'
             },
-            shared: ['react', 'react-dom']
+            shared: ['react', 'react-dom', 'auth']
         })
     ],
     build: {

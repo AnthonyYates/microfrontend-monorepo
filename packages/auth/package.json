@@ -1,0 +1,10 @@
+{
+    "name": "auth",
+    "version": "0.0.0",
+    "main": "./src/index.tsx",
+    "types": "./src/index.tsx",
+    "peerDependencies": {
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    }
+}

@@ -1,5 +1,7 @@
 import React, { Suspense } from 'react'
 import { Button } from 'ui'
+import { AppAuthProvider } from './AuthProvider'
+import { useAuth } from 'auth'
 
 // Lazy load the remote component
 // @ts-ignore
@@ -7,11 +9,27 @@ const RemoteApp = React.lazy(() => import('remote_app/App'))
 // @ts-ignore
 const RemoteButton = React.lazy(() => import('remote_app/Button'))
 
-function App() {
+function AppContent() {
+    const { user, isAuthenticated, login, logout } = useAuth();
+
     return (
         <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
             <h1>Host Application</h1>
-            <p>This is the main shell application.</p>
+
+            <div style={{ marginBottom: '20px', padding: '10px', border: '1px solid #ccc' }}>
+                <h3>Authentication Status</h3>
+                {isAuthenticated ? (
+                    <div>
+                        <p>Welcome, <strong>{user?.name}</strong>!</p>
+                        <Button onClick={logout}>Logout</Button>
+                    </div>
+                ) : (
+                    <div>
+                        <p>You are not logged in.</p>
+                        <Button onClick={login}>Login with SuperOffice!</Button>
+                    </div>
+                )}
+            </div>
 
             <div style={{ marginBottom: '20px' }}>
                 <h3>Shared UI Component (Local)</h3>
@@ -31,6 +49,14 @@ function App() {
                 <RemoteButton />
             </Suspense>
         </div>
+    )
+}
+
+function App() {
+    return (
+        <AppAuthProvider>
+            <AppContent />
+        </AppAuthProvider>
     )
 }
 
