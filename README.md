@@ -7,9 +7,17 @@ A modern microfrontend application built with **Vite**, **React**, and **Module 
 This project implements a microfrontend architecture with:
 
 - **Host Application** (`apps/host`) - The main shell application running on port 5000
+  - Runs on `http://localhost:5000`.
+  - Manages OIDC authentication with SuperOffice.
+  - Loads `apps/remote` at runtime.
 - **Remote Application** (`apps/remote`) - An independent microfrontend running on port 5001
+  - Runs on `http://localhost:5001`.
+  - Consumes the shared authentication context.
+- **Shared Auth Package** (`packages/auth`) - Shared React auth components used across applications
+  - Exports `AuthContext` and `useAuth` hook.
+  - Acts as the bridge between the Host's OIDC provider and the Remote's consumption.
 - **Shared UI Package** (`packages/ui`) - Shared React components used across applications
-
+  
 The host application dynamically loads components from the remote application at runtime using **Vite Module Federation**.
 
 ## 📁 Project Structure
@@ -82,6 +90,12 @@ federation({
 })
 ```
 
+## 🛡️ Authentication Flow
+1.  **Host** wraps the app in `AppAuthProvider` (using `react-oidc-context`).
+2.  **Host** injects the OIDC user state into the shared `AuthContext` from `packages/auth`.
+3.  **Remote** imports `useAuth` from `packages/auth` to access `user` and `isAuthenticated`.
+4.  **Module Federation** ensures both apps share the *same instance* of the Context, allowing state to persist across the boundary.
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -113,6 +127,17 @@ Build all applications:
 
 ```bash
 npm run build
+```
+
+### Configuration
+The OIDC configuration is located in `apps/host/src/AuthProvider.tsx`.
+```typescript
+const oidcConfig = {
+  authority: 'https://sod.superoffice.com/login',
+  client_id: 'YOUR_CLIENT_ID', // Updated with actual ID
+  redirect_uri: window.location.origin, // http://localhost:5000
+  // ...
+};
 ```
 
 ### Preview
