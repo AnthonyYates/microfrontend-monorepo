@@ -33,6 +33,12 @@ The host application dynamically loads components from the remote application at
 │       └── package.json
 │
 ├── packages/
+│   └── auth/                # Shared Auth component library
+│       ├── src/
+│       │   ├── Context.tsx
+│       │   └── index.tsx
+│       └── package.json
+│       └── tsconfig.json
 │   └── ui/                # Shared UI component library
 │       ├── src/
 │       │   ├── Button.tsx
