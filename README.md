@@ -20,6 +20,7 @@ The host application dynamically loads components from the remote application at
 │   ├── host/              # Host/Shell application (port 5000)
 │   │   ├── src/
 │   │   │   ├── App.tsx    # Main app consuming remote components
+│   │   │   ├── AuthProvider.tsx    # OpenID Connect AppAuthProvider
 │   │   │   └── main.tsx
 │   │   ├── vite.config.ts # Federation configuration (consumer)
 │   │   └── package.json
@@ -33,7 +34,7 @@ The host application dynamically loads components from the remote application at
 │       └── package.json
 │
 ├── packages/
-│   ├── auth/                # Shared Auth component library
+│   ├── auth/                # Shared Auth and useAuth() hook.
 │   │   ├── src/
 │   │   │   ├── Context.tsx
 │   │   │   └── index.tsx
