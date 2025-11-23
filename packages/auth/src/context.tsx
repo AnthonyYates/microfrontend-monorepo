@@ -1,13 +1,23 @@
 import { createContext, useContext, ReactNode } from 'react';
 
+export interface SuperOfficeClaims {
+    webApiUrl: string;
+    email: string;
+    contextIdentifier: string;
+    companyName: string;
+    systemUserToken: string;
+}
+
 export interface User {
     name?: string;
     email?: string;
     profile?: any;
+    superOffice?: SuperOfficeClaims;
 }
 
 export interface AuthContextType {
     user: User | null;
+    token?: string;
     isAuthenticated: boolean;
     isLoading: boolean;
     login: () => void;

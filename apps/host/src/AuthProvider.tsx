@@ -13,7 +13,7 @@ const oidcConfig = {
         token_endpoint: 'https://sod.superoffice.com/login/common/oauth/tokens',
         jwks_uri: 'https://sod.superoffice.com/login/common/oauth/jwks',
         userinfo_endpoint: 'https://sod.superoffice.com/login/common/oauth/userinfo',
-        end_session_endpoint: 'https://sod.superoffice.com/login/common/oauth/logout',
+        end_session_endpoint: 'https://sod.superoffice.com/login/logout',
     },
     onSigninCallback: () => {
         window.history.replaceState({}, document.title, window.location.pathname);
@@ -27,8 +27,16 @@ const AuthBridge = ({ children }: { children: React.ReactNode }) => {
         user: auth.user ? {
             name: auth.user.profile.name || auth.user.profile.sub,
             email: auth.user.profile.email,
-            profile: auth.user.profile
+            profile: auth.user.profile,
+            superOffice: {
+                webApiUrl: auth.user.profile['http://schemes.superoffice.net/identity/webapi_url'] as string,
+                email: auth.user.profile['http://schemes.superoffice.net/identity/email'] as string,
+                contextIdentifier: auth.user.profile['http://schemes.superoffice.net/identity/ctx'] as string,
+                companyName: auth.user.profile['http://schemes.superoffice.net/identity/company_name'] as string,
+                systemUserToken: auth.user.profile['http://schemes.superoffice.net/identity/system_token'] as string,
+            }
         } : null,
+        token: auth.user?.access_token,
         isAuthenticated: auth.isAuthenticated,
         isLoading: auth.isLoading,
         login: () => auth.signinRedirect(),

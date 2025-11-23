@@ -35,9 +35,12 @@ The host application dynamically loads components from the remote application at
 │   │
 │   └── remote/            # Remote microfrontend (port 5001)
 │       ├── src/
-│       │   ├── App.tsx    # Exposed remote app component
+│       │   ├── App.tsx     # Exposed remote app component
+│       │   ├── main.tsx    # Remote app entry point
+│       │   ├── StandAloneAuthProvider.tsx # For standalone testing of remote
 │       │   └── components/
-│       │       └── Button.tsx # Exposed remote button component
+│       │       ├── Button.tsx # Exposed remote button component
+│       │       └── CompanyInfo.tsx # Exposed remote company info component
 │       ├── vite.config.ts # Federation configuration (provider)
 │       └── package.json
 │
@@ -61,6 +64,7 @@ The host application dynamically loads components from the remote application at
 ## 🔌 Module Federation Setup
 
 ### Host Application
+
 The host consumes remote modules:
 
 ```typescript
@@ -75,6 +79,7 @@ federation({
 ```
 
 ### Remote Application
+
 The remote exposes components:
 
 ```typescript
@@ -91,14 +96,16 @@ federation({
 ```
 
 ## 🛡️ Authentication Flow
-1.  **Host** wraps the app in `AppAuthProvider` (using `react-oidc-context`).
-2.  **Host** injects the OIDC user state into the shared `AuthContext` from `packages/auth`.
-3.  **Remote** imports `useAuth` from `packages/auth` to access `user` and `isAuthenticated`.
-4.  **Module Federation** ensures both apps share the *same instance* of the Context, allowing state to persist across the boundary.
+
+1. **Host** wraps the app in `AppAuthProvider` (using `react-oidc-context`).
+2. **Host** injects the OIDC user state into the shared `AuthContext` from `packages/auth`.
+3. **Remote** imports `useAuth` from `packages/auth` to access `user` and `isAuthenticated`.
+4. **Module Federation** ensures both apps share the *same instance* of the Context, allowing state to persist across the boundary.
 
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js (v18 or higher recommended)
 - npm 9.6.0 or higher
 
@@ -110,16 +117,6 @@ npm install
 ```
 
 ### Development
-
-Run all applications in development mode:
-
-```bash
-npm run dev
-```
-
-This will start:
-- Host application at `http://localhost:5173`
-- Remote application at `http://localhost:5174`
 
 ### Build
 
@@ -149,6 +146,7 @@ npm run preview
 ```
 
 This will start:
+
 - Host application at `http://localhost:5000`
 - Remote application at `http://localhost:5001`
 
@@ -157,23 +155,28 @@ This will start:
 ## 🧩 Key Features
 
 ### Module Federation
+
 - **Dynamic Module Loading**: Host application loads remote components at runtime
 - **Shared Dependencies**: React and React-DOM are shared between applications to avoid duplication
 - **Independent Deployment**: Each microfrontend can be developed, built, and deployed independently
 
 ### Monorepo Benefits
+
 - **Shared Packages**: Common UI components in `packages/ui` are shared across applications
 - **Workspace Management**: npm workspaces for dependency management
 - **Turborepo**: Parallel task execution and intelligent caching for faster builds
 
 ### Exposed Remote Components
+
 The remote application exposes:
+
 1. `./App` - Complete remote application component
 2. `./Button` - Individual button component
 
 ## 📦 Available Scripts
 
 ### Root Level
+
 - `npm run dev` - Start all applications in development mode
 - `npm run build` - Build all applications
 - `npm run preview` - Preview production builds (parallel execution)
@@ -182,6 +185,7 @@ The remote application exposes:
 
 ### Individual Apps
 Navigate to `apps/host` or `apps/remote`:
+
 - `npm run dev` - Start individual app in development mode
 - `npm run build` - Build individual app
 - `npm run preview` - Preview individual app production build
@@ -211,6 +215,7 @@ Navigate to `apps/host` or `apps/remote`:
 ## 🤝 Contributing
 
 When adding new features:
+
 1. Keep microfrontends independent and loosely coupled
 2. Share common components through the `packages/ui` library
 3. Update exposed modules in remote's `vite.config.ts` when adding new exports
@@ -218,4 +223,4 @@ When adding new features:
 
 ## 📄 License
 
-This project is private and not licensed for public use.
+This project is licensed under the MIT License.

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Button } from 'ui'
 import { useAuth } from 'auth'
+import { CompanyInfo } from './components/CompanyInfo'
 
 function App() {
     const [count, setCount] = useState(0)
@@ -14,6 +15,8 @@ function App() {
             <div style={{ marginBottom: '10px', padding: '5px', backgroundColor: '#f0f0f0' }}>
                 <strong>Remote Auth State:</strong> {isAuthenticated ? `Logged in as ${user?.name}` : 'Not Logged In'}
             </div>
+
+            <CompanyInfo />
 
             <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                 <span>Count: {count}</span>
