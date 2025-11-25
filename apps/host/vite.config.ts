@@ -10,7 +10,7 @@ export default defineConfig({
             remotes: {
                 remote_app: 'http://localhost:5001/assets/remoteEntry.js'
             },
-            shared: ['react', 'react-dom', 'auth']
+            shared: ['react', 'react-dom', 'auth', 'web-components']
         })
     ],
     build: {
@@ -18,5 +18,13 @@ export default defineConfig({
         target: 'esnext',
         minify: false,
         cssCodeSplit: false
+    },
+    server: {
+        port: 5000,
+        strictPort: true,
+    },
+    preview: {
+        port: 5000,
+        strictPort: true,
     }
 })

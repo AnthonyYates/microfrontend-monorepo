@@ -4,9 +4,9 @@ import { SharedAuthProvider } from 'auth';
 
 const oidcConfig = {
     authority: 'https://sod.superoffice.com/login',
-    client_id: 'YOUR_CLIENT_ID_HERE',
-    //redirect_uri: window.location.origin,
-    redirect_uri: 'http://localhost:5000',
+    client_id: 'YOUR_CLIENT_ID_HERE', // Register App: https://dev.superoffice.com
+    redirect_uri: window.location.origin,
+    //redirect_uri: 'http://localhost:5000',
     metadata: {
         issuer: 'https://sod.superoffice.com/login',
         authorization_endpoint: 'https://sod.superoffice.com/login/common/oauth/authorize',

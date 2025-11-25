@@ -12,7 +12,7 @@ export default defineConfig({
                 './App': './src/App',
                 './Button': './src/components/Button'
             },
-            shared: ['react', 'react-dom', 'auth']
+            shared: ['react', 'react-dom', 'auth', 'web-components']
         })
     ],
     build: {
@@ -20,5 +20,13 @@ export default defineConfig({
         target: 'esnext',
         minify: false,
         cssCodeSplit: false
+    },
+    server: {
+        port: 5001,
+        strictPort: true,
+    },
+    preview: {
+        port: 5001,
+        strictPort: true,
     }
 })
